@@ -1,3 +1,3 @@
 # 8524TDT
 
-Blargh
+Polling buttons and lighting leds done in ex1, not tested, probably broken...
