@@ -104,9 +104,9 @@ _reset:
 	      str r2, [r4, #GPIO_CTRL]
 
 	      // set pins 8-15 to outputs for port A
-	      mov r2, #0x55
-	      orr r2, r2, r2, lsl #8
-	      orr r2, r2, r2, lsl #16
+	      ldr r2, =0x55555555
+	      //orr r2, r2, r2, lsl #8
+	      //orr r2, r2, r2, lsl #16
 	      str r2, [r4, #GPIO_MODEH]
 
 	      // turn of all leds, active low
@@ -116,19 +116,46 @@ _reset:
 
 	      // set pins 0-7 as inputs for port C
 	      ldr r5, =GPIO_PC_BASE
-	      mov r2, #0x33
-	      orr r2, r2, r2, lsl #8
-	      orr r2, r2, r2, lsl #16
+	      ldr r2, =0x33333333
+	      //orr r2, r2, r2, lsl #8
+	      //orr r2, r2, r2, lsl #16
 	      str r2, [r5, #GPIO_MODEL]
 
 	      // enable internal pull-up for port C
 	      mov r2, #0xff
 	      str r2, [r5, #GPIO_DOUT]
 
-//_loop:
+	      
+	      ////////////////////
+	      // set up interrupts
+	      ////////////////////
+	      
+
+	      // write 0x22222222 to GPIO_EXTIPSELL
+	      ldr r6, =GPIO_BASE
+ 	      ldr r2, =0x22222222
+	      str r2, [r6, #GPIO_EXTIPSELL]
+
+	      // set interrupt on 1->0
+ 	      mov r2, #0xff
+	      str r2, [r6, #GPIO_EXTIFALL]
+	      
+	      // set interrupt on 0->1
+	      str r2, [r6, #GPIO_EXTIRISE]
+
+	      // enable interrupt generation
+	      str r2, [r6, #GPIO_IEN]
+
+	      // enable interrupt handling
+ 	      ldr r1, =ISER0
+	      ldr r2, =0x802
+	      str r2, [r1]
+
+
+_loop:
 	      // loop forever and ever
-	      //bl _loop
-	      //b _loop
+	      // wfi
+	      b _loop
 
 
 
@@ -142,11 +169,16 @@ _reset:
         .thumb_func
 gpio_handler:  
 
+	      // clear interrupt flag
+	      ldr r1, [r6, #GPIO_IF]
+	      str r1, [r6, #GPIO_IFC]
+
+
 	      // read inputs and set outputs
 	      ldr r1, [r5, #GPIO_DIN]
 	      lsl r2, r1, #8
 	      str r2, [r4, #GPIO_DOUT]
-	      b gpio_handler	
+	      bx lr	
 	/////////////////////////////////////////////////////////////////////////////
 	
         .thumb_func
