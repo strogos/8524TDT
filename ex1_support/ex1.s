@@ -107,7 +107,12 @@ _reset:
 	      mov r2, #0x55
 	      orr r2, r2, r2, lsl #8
 	      orr r2, r2, r2, lsl #16
-	      str r2, [r1, #GPIO_MODEH]
+	      str r2, [r4, #GPIO_MODEH]
+
+	      // turn of all leds, active low
+	      mov r2, #0xff
+	      lsl r2, r2, #8
+	      str r2, [r4, GPIO_DOUT]
 
 	      // set pins 0-7 as inputs for port C
 	      ldr r5, =GPIO_PC_BASE
@@ -118,12 +123,12 @@ _reset:
 
 	      // enable internal pull-up for port C
 	      mov r2, #0xff
-	      str r2, [r1, #GPIO_DOUT]
+	      str r2, [r5, #GPIO_DOUT]
 
-_loop:
+//_loop:
 	      // loop forever and ever
-	      bl _loop
-	      b _loop
+	      //bl _loop
+	      //b _loop
 
 
 
@@ -141,8 +146,7 @@ gpio_handler:
 	      ldr r1, [r5, #GPIO_DIN]
 	      lsl r2, r1, #8
 	      str r2, [r4, #GPIO_DOUT]
-	      bx lr
-	
+	      b gpio_handler	
 	/////////////////////////////////////////////////////////////////////////////
 	
         .thumb_func
