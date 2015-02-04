@@ -105,6 +105,7 @@ _reset:
 
 	      // set pins 8-15 to outputs for port A
 	      ldr r2, =0x55555555
+	      //mov r2, #0x55
 	      //orr r2, r2, r2, lsl #8
 	      //orr r2, r2, r2, lsl #16
 	      str r2, [r4, #GPIO_MODEH]
@@ -117,6 +118,7 @@ _reset:
 	      // set pins 0-7 as inputs for port C
 	      ldr r5, =GPIO_PC_BASE
 	      ldr r2, =0x33333333
+	      //mov r2, #0x33
 	      //orr r2, r2, r2, lsl #8
 	      //orr r2, r2, r2, lsl #16
 	      str r2, [r5, #GPIO_MODEL]
@@ -130,7 +132,6 @@ _reset:
 	      // set up interrupts
 	      ////////////////////
 	      
-
 	      // write 0x22222222 to GPIO_EXTIPSELL
 	      ldr r6, =GPIO_BASE
  	      ldr r2, =0x22222222
@@ -152,10 +153,20 @@ _reset:
 	      str r2, [r1]
 
 
-//_loop:
+	      ////////////////////
+	      // energy saving
+	      ////////////////////
+
+	      // enable deep sleep mode and sleep on return from ISR
+	      ldr r1, =SCR
+	      mov r2, #6
+	      str r2, [r1]
+
+
+_loop:
 	      // loop forever and ever
-	      // wfi
-	      //b _loop
+	      wfi
+	      b _loop
 
 
 
