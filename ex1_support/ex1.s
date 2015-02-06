@@ -100,52 +100,51 @@ _reset:
 	      
 	      // set high drive strength for port A
 	      ldr r4, =GPIO_PA_BASE
-	      mov r2, #0x2
-	      str r2, [r4, #GPIO_CTRL]
+	      mov r1, #0x2
+	      str r1, [r4, #GPIO_CTRL]
 
 	      // set pins 8-15 to outputs for port A
-	      ldr r2, =0x55555555
+	      ldr r1, =0x55555555
 	      //mov r2, #0x55
 	      //orr r2, r2, r2, lsl #8
 	      //orr r2, r2, r2, lsl #16
-	      str r2, [r4, #GPIO_MODEH]
-
-	      // turn of all leds, active low
-	      mov r2, #0xff
-	      lsl r2, r2, #8
-	      str r2, [r4, GPIO_DOUT]
+	      str r1, [r4, #GPIO_MODEH]
 
 	      // set pins 0-7 as inputs for port C
 	      ldr r5, =GPIO_PC_BASE
-	      ldr r2, =0x33333333
+	      ldr r1, =0x33333333
 	      //mov r2, #0x33
 	      //orr r2, r2, r2, lsl #8
 	      //orr r2, r2, r2, lsl #16
-	      str r2, [r5, #GPIO_MODEL]
+	      str r1, [r5, #GPIO_MODEL]
 
 	      // enable internal pull-up for port C
-	      mov r2, #0xff
-	      str r2, [r5, #GPIO_DOUT]
+	      mov r1, #0xff
+	      str r1, [r5, #GPIO_DOUT]
 
 	      
+	      // jump to polling method if desired
+	      //b _polling
+
+
 	      ////////////////////
 	      // set up interrupts
 	      ////////////////////
 	      
 	      // write 0x22222222 to GPIO_EXTIPSELL
 	      ldr r6, =GPIO_BASE
- 	      ldr r2, =0x22222222
-	      str r2, [r6, #GPIO_EXTIPSELL]
+ 	      ldr r1, =0x22222222
+	      str r1, [r6, #GPIO_EXTIPSELL]
 
 	      // set interrupt on 1->0
- 	      mov r2, #0xff
-	      str r2, [r6, #GPIO_EXTIFALL]
+ 	      mov r1, #0xff
+	      str r1, [r6, #GPIO_EXTIFALL]
 	      
 	      // set interrupt on 0->1
-	      str r2, [r6, #GPIO_EXTIRISE]
+	      str r1, [r6, #GPIO_EXTIRISE]
 
 	      // enable interrupt generation
-	      str r2, [r6, #GPIO_IEN]
+	      str r1, [r6, #GPIO_IEN]
 
 	      // enable interrupt handling
  	      ldr r1, =ISER0
@@ -162,13 +161,8 @@ _reset:
 	      mov r2, #6
 	      str r2, [r1]
 
-
-_loop:
-	      // loop forever and ever
+	      // go to sleep
 	      wfi
-	      b _loop
-
-
 
 	/////////////////////////////////////////////////////////////////////////////
 	//
@@ -186,11 +180,20 @@ gpio_handler:
 
 
 	      // read inputs and set outputs
-	      ldr r1, [r5, #GPIO_DIN]
+	      ldr r1, [r5, #GPIO_DIN] 
 	      lsl r2, r1, #8
 	      str r2, [r4, #GPIO_DOUT]
 	      bx lr	
 	/////////////////////////////////////////////////////////////////////////////
+
+.thumb_func
+_polling:  
+
+	      // read inputs and set outputs
+	      ldr r1, [r5, #GPIO_DIN] 
+	      lsl r2, r1, #8
+	      str r2, [r4, #GPIO_DOUT]
+	      b _polling
 	
         .thumb_func
 dummy_handler:  
