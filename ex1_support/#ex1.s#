@@ -105,11 +105,17 @@ _reset:
 
 	      // set pins 8-15 to outputs for port A
 	      ldr r1, =0x55555555
+	      //mov r2, #0x55
+	      //orr r2, r2, r2, lsl #8
+	      //orr r2, r2, r2, lsl #16
 	      str r1, [r4, #GPIO_MODEH]
 
 	      // set pins 0-7 as inputs for port C
 	      ldr r5, =GPIO_PC_BASE
 	      ldr r1, =0x33333333
+	      //mov r2, #0x33
+	      //orr r2, r2, r2, lsl #8
+	      //orr r2, r2, r2, lsl #16
 	      str r1, [r5, #GPIO_MODEL]
 
 	      // enable internal pull-up for port C
@@ -166,11 +172,6 @@ _reset:
 	      str r2, [r1, #CMU_LFCLKSEL]
 
 
-	      ldr r1, =0b01111111 
-              lsl r1, r1, #8	      
-	      str r1, [r4, #GPIO_DOUT]
-	      
-
 	      // go to sleep
 	      wfi
 
@@ -191,59 +192,10 @@ gpio_handler:
 
 
 	      // read inputs and set outputs
-	      //ldr r1, [r5, #GPIO_DIN] 
-	      //lsl r2, r1, #8
-	      //str r2, [r4, #GPIO_DOUT]
-	      //bx lr
-	
-	      // read inputs to see which switch was pressed
-	      ldr r1, [r5, #GPIO_DIN]
-	      cmp r1, #0b11101111
-	      beq rol
-	      cmp r1, #0b10111111   
-	      beq ror
-
-	      bx lr
-	      
-	rol:
-	      ldr r1, [r4, #GPIO_DOUT]
-	      mov r2, #0x00000000
-	      ldr r2, =0b00000000 
-              lsl r2, r2, #8
-	      cmp r1, #0x00000007f
-	      beq do_nothing//rol_rotate
-	      lsr r1, r1, #1
-	      str r1, [r4, #GPIO_DOUT]
-	      bx lr
-	
-	ror:
-	      ldr r1, [r4, #GPIO_DOUT]
-	      ldr r2, =0b01111111 
-              lsl r2, r2, #8
-	      cmp r1, r2
-	      beq do_nothing//ror_rotate
-	      lsl r1, r1, #1
-	      str r1, [r4, #GPIO_DOUT]
-	      bx lr
-
-	rol_rotate:
-	      mov r2, #0x00000000
-	      ldr r2, =0x7f//0b01111111 
-              lsl r2, r2, #8
+	      ldr r1, [r5, #GPIO_DIN] 
+	      lsl r2, r1, #8
 	      str r2, [r4, #GPIO_DOUT]
-	      bx lr
-
-	ror_rotate:
-	      mov r3, #0x00000000
-	      ldr r3, =0b00000001 
-              lsl r3, r3, #8
-	      str r3, [r4, #GPIO_DOUT]
-	      bx lr
-
-	do_nothing:
-	      bx lr
-
-	
+	      bx lr	
 	/////////////////////////////////////////////////////////////////////////////
 
 .thumb_func
