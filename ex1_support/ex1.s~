@@ -166,7 +166,7 @@ _reset:
 	      str r2, [r1, #CMU_LFCLKSEL]
 
 
-	      ldr r1, =0b01111111 
+	      ldr r1, =0b00000000 
               lsl r1, r1, #8	      
 	      str r1, [r4, #GPIO_DOUT]
 	      
@@ -190,12 +190,6 @@ gpio_handler:
 	      str r1, [r6, #GPIO_IFC]
 
 
-	      // read inputs and set outputs
-	      //ldr r1, [r5, #GPIO_DIN] 
-	      //lsl r2, r1, #8
-	      //str r2, [r4, #GPIO_DOUT]
-	      //bx lr
-	
 	      // read inputs to see which switch was pressed
 	      ldr r1, [r5, #GPIO_DIN]
 	      cmp r1, #0b11101111
@@ -211,7 +205,7 @@ gpio_handler:
 	      ldr r2, =0b00000000 
               lsl r2, r2, #8
 	      cmp r1, #0x00000007f
-	      beq do_nothing//rol_rotate
+	      beq do_nothing
 	      lsr r1, r1, #1
 	      str r1, [r4, #GPIO_DOUT]
 	      bx lr
@@ -221,24 +215,12 @@ gpio_handler:
 	      ldr r2, =0b01111111 
               lsl r2, r2, #8
 	      cmp r1, r2
-	      beq do_nothing//ror_rotate
+	      beq do_nothing
 	      lsl r1, r1, #1
 	      str r1, [r4, #GPIO_DOUT]
 	      bx lr
 
-	rol_rotate:
-	      mov r2, #0x00000000
-	      ldr r2, =0x7f//0b01111111 
-              lsl r2, r2, #8
-	      str r2, [r4, #GPIO_DOUT]
-	      bx lr
 
-	ror_rotate:
-	      mov r3, #0x00000000
-	      ldr r3, =0b00000001 
-              lsl r3, r3, #8
-	      str r3, [r4, #GPIO_DOUT]
-	      bx lr
 
 	do_nothing:
 	      bx lr
