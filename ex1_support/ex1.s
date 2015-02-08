@@ -130,12 +130,12 @@ _reset:
  	      ldr r1, =0x22222222
 	      str r1, [r6, #GPIO_EXTIPSELL]
 
-	      // set interrupt on 1->0
+	      // set interrupt on falling edge
  	      mov r1, #0xff
-	      str r1, [r6, #GPIO_EXTIFALL]
+	      //str r1, [r6, #GPIO_EXTIFALL]
 	      
-	      // set interrupt on 0->1
-	      str r1, [r6, #GPIO_EXTIRISE]
+	      // set interrupt on rising edge
+	       str r1, [r6, #GPIO_EXTIRISE]
 
 	      // enable interrupt generation
 	      str r1, [r6, #GPIO_IEN]
