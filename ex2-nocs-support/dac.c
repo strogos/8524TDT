@@ -13,4 +13,9 @@ void setupDAC()
     3. Enable left and right audio channels by writing 1 to DAC0_CH0CTRL and DAC0_CH1CTRL
     4. Write a continuous stream of samples to the DAC data registers, DAC0_CH0DATA and DAC0_CH1DATA, for example from a timer interrupt
   */
+  
+  *CMU_HFPERCLKEN0 |= CMU2_HFPERCLKEN0_DAC0; /* enable DAC0 clock */
+  *DAC0_CTRL |= 0x50010; /* DIV32 and enable DAC output to amplifier */
+  *DAC0_CH0CTRL = 1; /* enable left channel */
+  *DAC0_CH1CTRL = 1; /* enable right channel */
 }

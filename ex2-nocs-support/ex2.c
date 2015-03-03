@@ -2,7 +2,6 @@
 #include <stdbool.h>
 
 #include "efm32gg.h"
-
 /* 
   TODO calculate the appropriate sample period for the sound wave(s) 
   you want to generate. The core clock (which the timer clock is derived
@@ -10,16 +9,17 @@
   registers are 16 bits.
 */
 /* The period between sound samples, in clock cycles */
-#define   SAMPLE_PERIOD   0
+#define   SAMPLE_PERIOD   65535
 
 /* Declaration of peripheral setup functions */
+void setupGPIO();
 void setupTimer(uint32_t period);
 void setupDAC();
 void setupNVIC();
 
 /* Your code will start executing here */
 int main(void) 
-{  
+{
   /* Call the peripheral setup functions */
   setupGPIO();
   setupDAC();
@@ -31,8 +31,9 @@ int main(void)
   /* TODO for higher energy efficiency, sleep while waiting for interrupts
      instead of infinite loop for busy-waiting
   */
+  
   while(1);
-
+  
   return 0;
 }
 
@@ -45,6 +46,7 @@ void setupNVIC()
      You will need TIMER1, GPIO odd and GPIO even interrupt handling for this
      assignment.
   */
+  *ISER0 = 0x1802; /* does stuff */
 }
 
 /* if other interrupt handlers are needed, use the following names: 
