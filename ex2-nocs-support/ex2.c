@@ -16,6 +16,7 @@ void setupGPIO();
 void setupTimer(uint32_t period);
 void setupDAC();
 void setupNVIC();
+void setupSleepMode(uint8_t foo);
 
 /* Your code will start executing here */
 int main(void) 
@@ -24,6 +25,7 @@ int main(void)
   setupGPIO();
   setupDAC();
   setupTimer(SAMPLE_PERIOD);
+  setupSleepMode(2);
   
   /* Enable interrupt handling */
   setupNVIC();
@@ -31,10 +33,10 @@ int main(void)
   /* TODO for higher energy efficiency, sleep while waiting for interrupts
      instead of infinite loop for busy-waiting
   */
+  __asm__("wfi");
+  //while(1);
   
-  while(1);
-  
-  return 0;
+  //return 0;
 }
 
 void setupNVIC()
@@ -48,6 +50,21 @@ void setupNVIC()
   */
   *ISER0 = 0x1802; /* does stuff */
 }
+
+void setupSleepMode(uint8_t foo)
+{
+  /*
+    The SCR controls features of entry to and exit from low power state.
+    foo = 0 only sleep 
+    foo = 2 enables sleep-on-exit when returning from Handler mode to Thread mode
+    foo = 6 enables sleep-on-exit and deep sleep mode
+    
+  */
+  
+  *SCR = foo;
+
+}
+
 
 /* if other interrupt handlers are needed, use the following names: 
    NMI_Handler
