@@ -1,0 +1,16 @@
+04:33:43 **** Build of configuration Default for project ex2-nocs-support ****
+sudo make upload 
+/opt/energymicro/eACommander.sh -r --address 0x00000000 -f "ex2.bin" -r
+Start address set to 0x00000000.
+Flashing "ex2.bin"
+Uploading flashloader...
+Waiting for flashloader to become ready...
+Erasing Flash...
+Flashing EFM32...
+Finished!
+
+Makefile:25: recipe for target 'upload' failed
+make: [upload] Error 255 (ignored)
+
+04:33:45 Build Finished (took 2s.139ms)
+
