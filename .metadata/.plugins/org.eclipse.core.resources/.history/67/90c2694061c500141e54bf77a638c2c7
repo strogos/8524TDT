@@ -49,7 +49,7 @@ void __attribute__ ((interrupt)) TIMER1_IRQHandler()
 				}
 				else
 				{
-					/*go back to sleep or whatever...*/
+					/*go back to sleep...*/
 					*GPIO_PA_DOUT = 0xFF00;
 					synthesizing = 0;
 					*TIMER1_CMD = 2;

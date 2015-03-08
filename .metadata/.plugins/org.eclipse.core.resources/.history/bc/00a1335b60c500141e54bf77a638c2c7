@@ -13,7 +13,6 @@
 typedef struct
 {
 	square_wave_synth_t *synthesizeData;
-	uint16_t synthesisLength;
 	uint16_t notes;
 
 } sound_effect_t;

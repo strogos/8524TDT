@@ -93,6 +93,8 @@ uint16_t getGeneratedSquareWaveSample()
     return sample;
 }
 
+
+
 uint16_t getSample()
 {
 	bias = MAX_BIAS;

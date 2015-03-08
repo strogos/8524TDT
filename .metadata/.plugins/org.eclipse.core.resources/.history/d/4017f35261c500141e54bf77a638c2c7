@@ -16,6 +16,7 @@
 /*
  * Sine wave generator [work in progress...]
  */
+
 ///* create one period at a given freq */
 /* create one period at a given freq */
 uint16_t generateSineWave(uint16_t freq, uint16_t sample)
@@ -30,6 +31,7 @@ uint16_t generateSineWave(uint16_t freq, uint16_t sample)
 /*
  * Square wave generator
  */
+
 static uint16_t initialSquareWavePeriod;
 static uint16_t lastSquareWavePeriod;
 static uint16_t dutyCycle;
@@ -92,6 +94,8 @@ uint16_t getGeneratedSquareWaveSample()
 
     return sample;
 }
+
+
 
 uint16_t getSample()
 {

@@ -15,10 +15,10 @@ static const sound_mode_t SOUND_MODE=SOUND_EFFECT;
 
 static volatile uint16_t synthesizing = 0;
 static volatile int16_t noteIndex = -1;
-static volatile uint16_t sampleIndex = 0;
+static volatile uint16_t ssampleIndex = 0;
 static volatile uint16_t sample = 0;
 static volatile sound_effect_t currentSoundEffect;
-static volatile uint16_t testBoom= 0;
+static volatile uint16_t test_boom = 0;
 
 
 /*private function declarations*/
@@ -37,9 +37,9 @@ void __attribute__ ((interrupt)) TIMER1_IRQHandler()
 			//TODO:-->load_song(); here?
 			break;
 		case SOUND_EFFECT:
-			if (sampleIndex % currentSoundEffect.synthesisLength == 0) // Check if sample is done
+			if (ssampleIndex % currentSoundEffect.synthesisLength == 0) // Check if sample is done
 			{
-				sampleIndex = 0;
+				ssampleIndex = 0;
 				noteIndex++;
 				if (noteIndex < currentSoundEffect.notes) // Check if there are more notes to play
 				{
@@ -49,7 +49,7 @@ void __attribute__ ((interrupt)) TIMER1_IRQHandler()
 				}
 				else
 				{
-					/*go back to sleep or whatever...*/
+					/*go back to sleep...*/
 					*GPIO_PA_DOUT = 0xFF00;
 					synthesizing = 0;
 					*TIMER1_CMD = 2;
@@ -62,14 +62,14 @@ void __attribute__ ((interrupt)) TIMER1_IRQHandler()
 	}
 	// Get next sample and write do DAC
 	sample = getSample();
-	sampleIndex++;
+	ssampleIndex++;
   
 	dataDAC(sample);
   
 	/*TODO: interface sinus below with square: shall be selectable by doing currentSoundEffect=boom;*/
  // dataDac(boom[test_boom]);
  // test_boom++;
- // if (testBoom== boomLen)
+ // if (test_boom == boomLen)
     //test = 0;
  //   disableDAC();
 }
