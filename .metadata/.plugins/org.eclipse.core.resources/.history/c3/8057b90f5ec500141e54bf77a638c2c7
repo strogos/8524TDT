@@ -27,15 +27,15 @@ static uint16_t squareWavePulseWidth;
 static uint16_t squareWaveAmplitude;
 static uint16_t squareWaveDirection;
 static uint16_t squareWaveSampleIdx;
-static int32_t generationProgress;
+static int32_t square1_progress;
 static uint16_t bias;
 
 /*private func declarations*/
-static uint16_t getGeneratedSquareWaveSample();
+static uint16_t square1_get_sample();
 
 void generateSquareWave(square_wave_synth_t note)
 {
-    uint16_t lastSquareWavePeriod_OLD = lastSquareWavePeriod;
+    uint16_t old_period_end = lastSquareWavePeriod;
 
     initialSquareWavePeriod = note.initialPeriod / (1 << note.octave);
     lastSquareWavePeriod = note.lastPeriod / (1 << note.octave);
@@ -45,36 +45,39 @@ void generateSquareWave(square_wave_synth_t note)
     lastSquareWaveAmp = (note.lastAmplitide>MAX_AMPLITUDE) ? (note.lastAmplitide = MAX_AMPLITUDE) : note.lastAmplitide;
 
 
-    if (initialSquareWavePeriod != lastSquareWavePeriod_OLD)
+    if (initialSquareWavePeriod != old_period_end)
     {
         squareWavePulseWidth = (initialSquareWavePeriod * dutyCycle) / 100;
         squareWaveAmplitude = initialSquareWaveAmp;
         squareWaveDirection = !squareWaveDirection;
         squareWaveSampleIdx = 0;
     }
-    generationProgress = 0;
+    square1_progress = 0;
 }
 
 
 
-uint16_t getGeneratedSquareWaveSample()
+uint16_t square1_get_sample()
 {
 
     uint16_t sample = (squareWaveDirection ? squareWaveAmplitude : 0);
     bias -= squareWaveAmplitude / 2;
 
     squareWaveSampleIdx++;
-    generationProgress++;
+    square1_progress++;
     if (squareWaveSampleIdx >= squareWavePulseWidth)
     {
         squareWaveSampleIdx = 0;
         squareWaveDirection = !squareWaveDirection;
 
+        int16_t period_diff = lastSquareWavePeriod - initialSquareWavePeriod;
+        uint16_t new_period = initialSquareWavePeriod + (period_diff * square1_progress) / squareWavesDuration;
+        squareWavePulseWidth = (squareWaveDirection ?
+            (new_period * dutyCycle) / 100 :
+            new_period - (new_period * dutyCycle) / 100);
 
-        uint16_t calcNewPeriod = initialSquareWavePeriod + ((lastSquareWavePeriod - initialSquareWavePeriod) * generationProgress) / squareWavesDuration;
-        squareWavePulseWidth = (squareWaveDirection ? (calcNewPeriod * dutyCycle) / 100 : calcNewPeriod - (calcNewPeriod * dutyCycle) / 100);
-
-        squareWaveAmplitude = initialSquareWaveAmp + ((lastSquareWaveAmp - initialSquareWaveAmp) * generationProgress) / squareWavesDuration;
+        int16_t amp_diff = lastSquareWaveAmp - initialSquareWaveAmp;
+        squareWaveAmplitude = initialSquareWaveAmp + (amp_diff * square1_progress) / squareWavesDuration;
     }
 
     return sample;
@@ -86,7 +89,7 @@ uint16_t getSample()
 {
     uint16_t sample = 0;
     bias = MAX_BIAS;
-    sample += getGeneratedSquareWaveSample();
+    sample += square1_get_sample();
     sample += bias;
 
     return sample;

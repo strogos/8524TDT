@@ -31,7 +31,7 @@ static int32_t generationProgress;
 static uint16_t bias;
 
 /*private func declarations*/
-static uint16_t getGeneratedSquareWaveSample();
+static uint16_t square1_get_sample();
 
 void generateSquareWave(square_wave_synth_t note)
 {
@@ -57,7 +57,7 @@ void generateSquareWave(square_wave_synth_t note)
 
 
 
-uint16_t getGeneratedSquareWaveSample()
+uint16_t square1_get_sample()
 {
 
     uint16_t sample = (squareWaveDirection ? squareWaveAmplitude : 0);
@@ -71,8 +71,8 @@ uint16_t getGeneratedSquareWaveSample()
         squareWaveDirection = !squareWaveDirection;
 
 
-        uint16_t calcNewPeriod = initialSquareWavePeriod + ((lastSquareWavePeriod - initialSquareWavePeriod) * generationProgress) / squareWavesDuration;
-        squareWavePulseWidth = (squareWaveDirection ? (calcNewPeriod * dutyCycle) / 100 : calcNewPeriod - (calcNewPeriod * dutyCycle) / 100);
+        uint16_t new_period = initialSquareWavePeriod + ((lastSquareWavePeriod - initialSquareWavePeriod) * generationProgress) / squareWavesDuration;
+        squareWavePulseWidth = (squareWaveDirection ? (new_period * dutyCycle) / 100 : new_period - (new_period * dutyCycle) / 100);
 
         squareWaveAmplitude = initialSquareWaveAmp + ((lastSquareWaveAmp - initialSquareWaveAmp) * generationProgress) / squareWavesDuration;
     }
@@ -86,7 +86,7 @@ uint16_t getSample()
 {
     uint16_t sample = 0;
     bias = MAX_BIAS;
-    sample += getGeneratedSquareWaveSample();
+    sample += square1_get_sample();
     sample += bias;
 
     return sample;
