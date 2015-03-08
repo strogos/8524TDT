@@ -16,8 +16,8 @@ typedef struct
   uint16_t note_duration;
   square_wave_synth_t *sq1_notes;
 
-} sound_effect_t;
+} sound_t;
 
-extern sound_effect_t test;
+extern sound_t test;
 
 #endif /* SOUND_EFFECT_H_ */

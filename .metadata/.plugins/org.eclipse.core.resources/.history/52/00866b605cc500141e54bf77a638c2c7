@@ -60,7 +60,8 @@ static uint16_t bias;
 uint16_t square1_get_sample()
 {
 
-    uint16_t sample = (square1_direction ? square1_amplitude : 0);
+    uint16_t sample;
+    sample = (square1_direction ? square1_amplitude : 0);
     bias -= square1_amplitude / 2;
 
     square1_sample_idx++;

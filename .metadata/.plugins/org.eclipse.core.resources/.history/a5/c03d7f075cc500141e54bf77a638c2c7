@@ -19,7 +19,7 @@ static volatile int16_t note_idx = -1;
 static volatile uint16_t sample_idx = 0;
 static volatile uint16_t sample = 0;
 
-static volatile sound_effect_t current_sound;
+volatile static sound_effect_t current_sound;
 static volatile uint16_t test_boom = 0;
 
 

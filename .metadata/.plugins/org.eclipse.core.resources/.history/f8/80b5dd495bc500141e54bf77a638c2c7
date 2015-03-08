@@ -34,7 +34,7 @@
 #define NOTE_Bb 378
 #define NOTE_B  357
 
-#define MAX_AMPLITUDE 0x3F
+#define MAX_AMPLITUDE_PER_CHANNEL 0x3F
 #define MAX_BIAS 0x7F
 
 typedef struct
@@ -43,8 +43,8 @@ typedef struct
     uint16_t initialPeriod;
     uint16_t lastPeriod;
     uint16_t initialAmplitide;
-    uint16_t lastAmplitide;
-    uint16_t dutyCycle;
+    uint16_t lastlAmplitide;
+    uint16_t duty_cycle;
     int32_t duration;
 } square_wave_synth_t;
 
