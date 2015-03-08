@@ -16,7 +16,7 @@ static volatile uint16_t playing = 0;
 static volatile int16_t note_idx = -1;
 static volatile uint16_t sample_idx = 0;
 static volatile uint16_t sample = 0;
-static volatile uint16_t test_boom = 0;
+static volatile uint16_t test = 0;
 static sound_t current_sound;
 
 ///*example sound effects to be made (should be moved to synthesizer .c-file)*/
@@ -84,9 +84,9 @@ void __attribute__ ((interrupt)) TIMER1_IRQHandler()
 
 	//datafeedDAC(sample);
 
-	 datafeedDAC(boom[test_boom]);
-	 test_boom++;
-	  if (test_boom == boomLen)
+	 datafeedDAC(boom[test]);
+	 test++;
+	  if (test == boomLen)
 	    disableDAC();
 
 

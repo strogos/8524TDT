@@ -101,17 +101,10 @@ uint16_t get_sample()
     return sample;
 }
 
+
+
+
 void generateSquareWave (int amp, int freq)
 {
 
 }
-
-///* create one period at a given freq */
-//uint16_t sineWave(uint16_t freq, uint16_t sample)
-//{
-//  uint16_t buffer;
-//
-//  buffer = (uint16_t) 1024 * (1 + sin((2*3.14159265359*sample*freq)/44100));
-//  return buffer;
-//
-//}
