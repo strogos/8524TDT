@@ -1,6 +1,6 @@
-03:35:38 **** Build of configuration Default for project ex2-eclipse-makefile ****
+03:48:07 **** Build of configuration Default for project ex2-eclipse-makefile ****
 make clean 
 rm -rf *.o *.elf *.bin *.hex 
 
-03:35:38 Build Finished (took 71ms)
+03:48:07 Build Finished (took 66ms)
 

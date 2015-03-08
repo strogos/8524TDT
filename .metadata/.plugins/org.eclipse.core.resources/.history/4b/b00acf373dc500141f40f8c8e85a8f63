@@ -40,7 +40,7 @@ void __attribute__ ((interrupt)) TIMER1_IRQHandler()
 	*TIMER1_IFC = *TIMER1_IF; /* clear interrupt flag */
 
 	/*test*/
-	//*GPIO_PA_DOUT = ~*GPIO_PA_DOUT;
+	*GPIO_PA_DOUT = ~*GPIO_PA_DOUT;
 	sound_t current_sound = test;
 
 	/*TODO play intro song and/or sound effects!!*/

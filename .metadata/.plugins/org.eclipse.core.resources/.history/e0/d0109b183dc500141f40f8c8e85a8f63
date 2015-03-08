@@ -10,8 +10,8 @@
  ** might only be able to handle a couple of seconds)
  ** 14MHz/44.1kHz = 317.46
  * */
-//#define   SAMPLE_PERIOD   65535
-static const uint16_t SAMPLE_PERIOD = 318;//move this to timer.c?
+#define   SAMPLE_PERIOD   65535
+//static const uint16_t SAMPLE_PERIOD = 318;//move this to timer.c?
 
 /* Declaration of peripheral setup functions */
 static void setupNVIC();
