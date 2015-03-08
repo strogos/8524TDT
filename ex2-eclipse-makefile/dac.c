@@ -31,3 +31,9 @@ void disableDAC()
     *DAC0_CH1CTRL = 0;
     *CMU_HFPERCLKEN0 &= ~CMU2_HFPERCLKEN0_DAC0;
 }
+
+void datafeedDAC(int16_t data)
+{
+	*DAC0_CH0DATA = data;
+	*DAC0_CH1DATA = data;
+}

@@ -24,6 +24,7 @@ void LEDupdateGPIO();
 /* From dac.c */
 void setupDAC();
 void disableDAC();
+void datafeedDAC(int16_t);
 
 /* From timer.c */
 void setupTimer(uint16_t);
@@ -34,10 +35,11 @@ void disableTimer();
 /*TODO:From interrupt_handlers.c (if any)*/
 
 
-/*TODO:From generateSong whatever sound or synthesizer.c*/
+/*TODO:From generateSong whatever sound.c*/
 void loadSong();
 void loadSoundEffect();
 void stopSong();
+
 
 
 

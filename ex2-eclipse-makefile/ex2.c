@@ -4,7 +4,7 @@
 
 #include "efm32gg.h"
 #include "proto.h"
-
+#include "sound_effect.h"
 /* The period between sound samples, in clock cycles
  ** for now set to 44.1kHz (might want to do less; perhaps 8kHz because of size and DAC
  ** might only be able to handle a couple of seconds)
@@ -29,7 +29,6 @@ int main(void)
 
   setupNVIC();
   /*below should be moved to future sound_effect.c or similar*/
-
 
   
   //while(1);
