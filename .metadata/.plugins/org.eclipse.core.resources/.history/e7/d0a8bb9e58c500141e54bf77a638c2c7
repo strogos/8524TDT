@@ -33,15 +33,15 @@ static int32_t square1_progress;
 /*private func declarations*/
 static uint16_t square1_get_sample();
 
-void generateSquareWave(square_wave_synth_t note)
+void generateSquareWave(square_note_t note)
 {
     uint16_t old_period_end = square1_period_end;
 
-    square1_period_begin = note.initialPeriod / (1 << note.octave);
-    square1_period_end = note.lastPeriod / (1 << note.octave);
+    square1_period_begin = note.period_begin / (1 << note.octave);
+    square1_period_end = note.period_end / (1 << note.octave);
     square1_duty_cycle = note.duty_cycle;
     square1_duration = (note.duration ? note.duration : 1);
-    square1_amp_begin = (note.initialAmplitide>MAX_AMPLITUDE_PER_CHANNEL) ? (note.initialAmplitide = MAX_AMPLITUDE_PER_CHANNEL) : note.initialAmplitide;
+    square1_amp_begin = (note.amp_begin>MAX_AMPLITUDE_PER_CHANNEL) ? (note.amp_begin = MAX_AMPLITUDE_PER_CHANNEL) : note.amp_begin;
     square1_amp_end = (note.amp_end>MAX_AMPLITUDE_PER_CHANNEL) ? (note.amp_end = MAX_AMPLITUDE_PER_CHANNEL) : note.amp_end;
 
 
@@ -86,7 +86,7 @@ uint16_t square1_get_sample()
 
 
 
-uint16_t getSample()
+uint16_t get_sample()
 {
     uint16_t sample = 0;
     bias = MAX_BIAS;

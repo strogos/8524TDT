@@ -39,11 +39,11 @@
 
 typedef struct
 {
-	uint16_t octave;/*0 = C1 D1 etc--*/
     uint16_t initialPeriod;
-    uint16_t lastPeriod;
-    uint16_t initialAmplitide;
-    uint16_t lastlAmplitide;
+    uint16_t octave;
+    uint16_t amp_begin;
+    uint16_t period_end;
+    uint16_t amp_end;
     uint16_t duty_cycle;
     int32_t duration;
 } square_wave_synth_t;

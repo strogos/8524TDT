@@ -7,14 +7,14 @@
 #include "sound_effect.h"
 //#include "synthesizer.h"
 
-static square_note_t test_sqr_notes1[] =
+static square_wave_synth_t test_sqr_notes1[] =
 {
-	{.period_begin = NOTE_C, .period_end = NOTE_C, .octave = 3, .amp_begin = MAX_AMPLITUDE_PER_CHANNEL/10, .amp_end = MAX_AMPLITUDE_PER_CHANNEL/10, .duty_cycle = 50, .duration = 6615},
-	{.period_begin = NOTE_C, .period_end = NOTE_C, .octave = 1, .amp_begin = MAX_AMPLITUDE_PER_CHANNEL/10, .amp_end = MAX_AMPLITUDE_PER_CHANNEL/10, .duty_cycle = 50, .duration = 6615},
-	{.period_begin = NOTE_C, .period_end = NOTE_C, .octave = 0, .amp_begin = MAX_AMPLITUDE_PER_CHANNEL/10, .amp_end = MAX_AMPLITUDE_PER_CHANNEL/10, .duty_cycle = 50, .duration = 6615},
-	{.period_begin = NOTE_D, .period_end = NOTE_C, .octave = 1, .amp_begin = MAX_AMPLITUDE_PER_CHANNEL/10, .amp_end = MAX_AMPLITUDE_PER_CHANNEL/30, .duty_cycle = 50, .duration = 6615},
-	{.period_begin = NOTE_A, .period_end = NOTE_C, .octave = 1, .amp_begin = MAX_AMPLITUDE_PER_CHANNEL/30, .amp_end = MAX_AMPLITUDE_PER_CHANNEL/90, .duty_cycle = 50, .duration = 6615},
-	{.period_begin = NOTE_Db, .period_end = NOTE_Db, .octave = 1, .amp_begin = MAX_AMPLITUDE_PER_CHANNEL/90, .amp_end = MAX_AMPLITUDE_PER_CHANNEL/270, .duty_cycle = 50, .duration = 6615},
+	{.initialPeriod = NOTE_C, .lastPeriod = NOTE_C, .octave = 3, .initialAmplitide = MAX_AMPLITUDE_PER_CHANNEL/10, .lastlAmplitide = MAX_AMPLITUDE_PER_CHANNEL/10, .duty_cycle = 50, .duration = 6615},
+	{.initialPeriod = NOTE_C, .lastPeriod = NOTE_C, .octave = 1, .initialAmplitide = MAX_AMPLITUDE_PER_CHANNEL/10, .lastlAmplitide = MAX_AMPLITUDE_PER_CHANNEL/10, .duty_cycle = 50, .duration = 6615},
+	{.initialPeriod = NOTE_C, .lastPeriod = NOTE_C, .octave = 0, .initialAmplitide = MAX_AMPLITUDE_PER_CHANNEL/10, .lastlAmplitide = MAX_AMPLITUDE_PER_CHANNEL/10, .duty_cycle = 50, .duration = 6615},
+	{.initialPeriod = NOTE_D, .lastPeriod = NOTE_C, .octave = 1, .initialAmplitide = MAX_AMPLITUDE_PER_CHANNEL/10, .lastlAmplitide = MAX_AMPLITUDE_PER_CHANNEL/30, .duty_cycle = 50, .duration = 6615},
+	{.initialPeriod = NOTE_A, .lastPeriod = NOTE_C, .octave = 1, .initialAmplitide = MAX_AMPLITUDE_PER_CHANNEL/30, .lastlAmplitide = MAX_AMPLITUDE_PER_CHANNEL/90, .duty_cycle = 50, .duration = 6615},
+	{.initialPeriod = NOTE_Db, .lastPeriod = NOTE_Db, .octave = 1, .initialAmplitide = MAX_AMPLITUDE_PER_CHANNEL/90, .lastlAmplitide = MAX_AMPLITUDE_PER_CHANNEL/270, .duty_cycle = 50, .duration = 6615},
 };
 
 sound_t test =
