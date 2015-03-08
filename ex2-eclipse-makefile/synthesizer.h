@@ -50,7 +50,7 @@ typedef struct
 
 
 void generateSquareWave(square_wave_synth_t);
-uint16_t generateSineWave(uint16_t, uint16_t)
+uint16_t generateSineWave(uint16_t, uint16_t);
 uint16_t getSample();
 
 #endif /* SYNTHESIZER_H_ */
