@@ -8,6 +8,10 @@
 #include "synthesizer.h"
 
 #include <stdio.h>
+#include <stdint.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#include <math.h>
 
 /*
  * Square wave generator
@@ -33,8 +37,8 @@ void square1_play_note(square_note_t note)
 {
     uint16_t old_period_end = square1_period_end;
 
-    square1_period_begin = note.period_begin * note.octave;// / (1 << note.octave);
-    square1_period_end = note.period_end * note.octave;// (1 << note.octave);
+    square1_period_begin = note.period_begin / (1 << note.octave);
+    square1_period_end = note.period_end / (1 << note.octave);
     square1_duty_cycle = note.duty_cycle;
     square1_duration = (note.duration ? note.duration : 1);
     square1_amp_begin = clamp(note.amp_begin);
@@ -101,17 +105,13 @@ uint16_t get_sample()
     return sample;
 }
 
-void generateSquareWave (int amp, int freq)
+///* create one period at a given freq */
+/* create one period at a given freq */
+uint16_t sineWave(uint16_t freq, uint16_t sample)
 {
+  uint16_t buffer;
+  
+  buffer = (uint16_t) 1024 * (1 + sin((2*3.14159265359*sample*freq)/44100));
+  return buffer;
 
 }
-
-///* create one period at a given freq */
-//uint16_t sineWave(uint16_t freq, uint16_t sample)
-//{
-//  uint16_t buffer;
-//
-//  buffer = (uint16_t) 1024 * (1 + sin((2*3.14159265359*sample*freq)/44100));
-//  return buffer;
-//
-//}
